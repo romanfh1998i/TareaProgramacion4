@@ -1,0 +1,22 @@
+@import "../valo/valo.scss";
+
+@mixin demograils {
+  @include valo;
+
+  .myGrid {
+    margin-left: 12px !important;
+  }
+
+  .myGrid .v-grid-body .v-grid-row {
+    color: #ffff00;
+  }
+
+  .myGrid .v-grid-body .v-grid-row-stripe {
+    color: red;
+  }
+
+  .buttonEdit .v-button {
+    color: yellow;
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,37 @@
+/src/main/webapp/VAADIN/gwt-unitCache/
+/src/main/webapp/VAADIN/themes/valo/
+
+src/main/webapp/VAADIN/themes/DemoGrails/styles.css
+src/main/webapp/VAADIN/themes/DemoGrails/styles.css.gz
+
+/src/test/resources/*.properties
+
+# IDE
+out/
+Thumbs.db
+.DS_Store
+.gradle
+build/
+.idea
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+*.cache
+.designer
+*.log
+*.snappy
+*.lck
+
+# Build dir
+/out/
+/build/
+/target/
+/tests/
+
+# Libs
+/lib/*.jar
+
+
