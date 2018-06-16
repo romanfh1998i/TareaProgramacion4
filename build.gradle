@@ -70,6 +70,8 @@ dependencies {
     compile "com.vaadin:vaadin-spring-boot-starter:$vaadinSpringVersion"
     compile "com.vaadin:vaadin-spring-boot:$vaadinSpringVersion"
     compile "com.vaadin:vaadin-push:$vaadinVersion"
+
+//    compile 'org.mariadb.jdbc:mariadb-java-client:2.2.5'
 }
 
 vaadin {

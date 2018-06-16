@@ -2,16 +2,38 @@ package demograils
 
 import edu.pucmm.grails.domain.Authentication
 import edu.pucmm.grails.domain.Koffee
+import edu.pucmm.grails.utils.Grails
 
 class BootStrap {
 
     def init = { servletContext ->
-        new Koffee(name: "Capuchino", price: 50).save(flush: true, failOnError: true)
-        new Koffee(name: "Frapuchino", price: 80).save(flush: true, failOnError: true)
+        createKofee("Capuchino", new BigDecimal(50))
+        createKofee("Frapuchino", new BigDecimal(80))
 
-        new Authentication(username: "aluis", password: "123").save(flush: true, failOnError: true)
-        new Authentication(username: "franco", password: "rfranco").save(flush: true, failOnError: true)
+        createAuthentication("aluis", "123")
+        createAuthentication("franco", "rfranco")
     }
+
+    private Koffee createKofee(String name, BigDecimal price) {
+        Koffee koffee = Koffee.findByName(name)
+        if (koffee == null) {
+            koffee = new Koffee()
+            koffee.name = name
+            koffee.price = price
+            return koffee.save(flush: true, failOnError: true)
+        }
+        return koffee
+    }
+
+    private Authentication createAuthentication(String name, String password) {
+        Authentication authentication = Authentication.findByUsername(name)
+        if (authentication == null) {
+            return Grails.get(AuthenticationService).registerUser(name, password)
+        }
+        return authentication
+    }
+
+
     def destroy = {
     }
 }

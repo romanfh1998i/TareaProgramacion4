@@ -11,10 +11,10 @@ class AuthenticationService {
         return Authentication.findByUsernameAndPassword(user, password)
     }
 
-    void registerUser(String user, String password) {
+    Authentication registerUser(String user, String password) {
         Authentication authentication = new Authentication()
         authentication.username = user
         authentication.password = password
-        authentication.save(flush: true, failOnError: true)
+        return authentication.save(flush: true, failOnError: true)
     }
 }
