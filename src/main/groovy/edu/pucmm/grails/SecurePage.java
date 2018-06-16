@@ -34,7 +34,8 @@ public class SecurePage extends VerticalLayout implements View {
             private static final long serialVersionUID = 1L;
             @Override
             public void buttonClick(Button.ClickEvent event)  {
-                Page.getCurrent().setUriFragment("!"+OtherSecurePage.NAME);
+                VaadinSession.getCurrent().getSession().invalidate();
+                Page.getCurrent().setLocation("/");
             }
         });
 

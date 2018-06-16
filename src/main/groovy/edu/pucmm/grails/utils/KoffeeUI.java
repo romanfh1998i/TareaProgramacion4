@@ -20,11 +20,12 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class KoffeeUI  extends VerticalLayout implements View {
+public class KoffeeUI extends VerticalLayout implements View {
+
     public static final String NAME = "Koffee";
     private VerticalLayout mainLayout = new VerticalLayout();
 
-    public KoffeeUI(){
+    public KoffeeUI() {
 
         Grid<Koffee> grid = new Grid<>();
 

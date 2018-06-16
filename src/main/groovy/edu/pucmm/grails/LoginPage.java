@@ -1,25 +1,18 @@
 package edu.pucmm.grails;
 
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import demograils.AuthenticationService;
+import edu.pucmm.grails.utils.Grails;
 
 public class LoginPage extends VerticalLayout implements View {
-    private static final  Long serialVersionUID = 1L;
-    public static final String NAME="";
 
-    public LoginPage(){
+    private static final Long serialVersionUID = 1L;
+    public static final String NAME = "";
+
+    public LoginPage() {
         Panel panel = new Panel("Login");
         panel.setSizeUndefined();
         addComponent(panel);
@@ -35,23 +28,18 @@ public class LoginPage extends VerticalLayout implements View {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-
-                if(AppUI.AUTH.authenticate(username.getValue(), password.getValue())){
-
+                if (Grails.get(AuthenticationService.class).autenticate(username.getValue(), password.getValue())) {
                     VaadinSession.getCurrent().setAttribute("user", username.getValue());
-
                     getUI().getNavigator().addView(SecurePage.NAME, SecurePage.class);
-
                     getUI().getNavigator().addView(OtherSecurePage.NAME, OtherSecurePage.class);
-
-                    Page.getCurrent().setUriFragment("!"+SecurePage.NAME);
-
-                }else{
-
+                    Page.getCurrent().setUriFragment("!" + SecurePage.NAME);
+                } else {
                     Notification.show("Invalid credentials", Notification.Type.ERROR_MESSAGE);
                 }
             }
         });
+
+//        Grails.get(AuthenticationService.class).registerUser(); Para llamar el servicio para registrar el usuario en mi db
         content.addComponent(send);
         content.setSizeUndefined();
         content.setMargin(true);
