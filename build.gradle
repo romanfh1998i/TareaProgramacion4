@@ -4,13 +4,17 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
         maven { url "http://maven.vaadin.com/vaadin-addons" }
     }
+
+
     dependencies {
+        classpath 'org.grails.plugins:database-migration:3.0.3'
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.8"
         classpath "com.devsoap.plugin:gradle-vaadin-plugin:1.3.1" // Activo vaadin
     }
 }
+
 
 version "0.1"
 group "edu.pucmm.grails"
@@ -33,6 +37,8 @@ repositories {
 }
 
 dependencies {
+    compile 'org.grails.plugins:database-migration:3.0.3'
+    compile 'org.liquibase:liquibase-core:3.5.3'
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
@@ -109,3 +115,12 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+//tag::migrationsFolder[]
+sourceSets {
+    main {
+        resources {
+            srcDir 'grails-app/migrations'
+        }
+    }
+}
+//end::migrationsFolder[]

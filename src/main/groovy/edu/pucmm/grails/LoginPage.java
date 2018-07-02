@@ -6,6 +6,8 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import demograils.AuthenticationService;
 import edu.pucmm.grails.utils.Grails;
+import edu.pucmm.grails.utils.KoffeeUI;
+import edu.pucmm.grails.utils.RegisterUI;
 
 public class LoginPage extends VerticalLayout implements View {
 
@@ -22,6 +24,15 @@ public class LoginPage extends VerticalLayout implements View {
         PasswordField password = new PasswordField("Password");
         content.addComponent(password);
         Button send = new Button("Enter");
+        Button register = new Button("Register");
+
+        register.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Page.getCurrent().setUriFragment("!"+ RegisterUI.NAME);
+            }
+        });
 
         send.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -31,16 +42,18 @@ public class LoginPage extends VerticalLayout implements View {
                 if (Grails.get(AuthenticationService.class).autenticate(username.getValue(), password.getValue())) {
                     VaadinSession.getCurrent().setAttribute("user", username.getValue());
                     getUI().getNavigator().addView(SecurePage.NAME, SecurePage.class);
-                    getUI().getNavigator().addView(OtherSecurePage.NAME, OtherSecurePage.class);
-                    Page.getCurrent().setUriFragment("!" + SecurePage.NAME);
+                    getUI().getNavigator().addView(KoffeeUI.NAME, KoffeeUI.class);
+                    Page.getCurrent().setUriFragment("!" + KoffeeUI.NAME);
+
                 } else {
                     Notification.show("Invalid credentials", Notification.Type.ERROR_MESSAGE);
                 }
             }
         });
 
-//        Grails.get(AuthenticationService.class).registerUser(); Para llamar el servicio para registrar el usuario en mi db
+
         content.addComponent(send);
+        content.addComponent(register);
         content.setSizeUndefined();
         content.setMargin(true);
         panel.setContent(content);

@@ -4,11 +4,11 @@ import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.DataProviderListener;
 import com.vaadin.data.provider.Query;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.Registration;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import demograils.KoffeeService;
 import edu.pucmm.grails.NewKoffee;
@@ -24,9 +24,10 @@ public class KoffeeUI extends VerticalLayout implements View {
 
     public static final String NAME = "Koffee";
     private VerticalLayout mainLayout = new VerticalLayout();
-
+    private Button logout;
+    private Label currentUser;
     public KoffeeUI() {
-
+        logout = new Button("Logout");
         Grid<Koffee> grid = new Grid<>();
 
         DataProvider<Koffee, Object> provider = new DataProvider<Koffee, Object>() {
@@ -121,11 +122,26 @@ public class KoffeeUI extends VerticalLayout implements View {
                 }
             }
         });
+        logout.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public void buttonClick(Button.ClickEvent event)  {
+                VaadinSession.getCurrent().getSession().invalidate();
+                Page.getCurrent().setLocation("/");
+            }
+        });
+        currentUser = new Label("");
+        addComponent(currentUser);
+        addComponent(logout);
+        setComponentAlignment(logout, Alignment.TOP_RIGHT);
         addComponent(btnEdit);
         addComponent(btnDelete);
         addComponent(btnAdd);
         addComponent(grid);
-
+    }
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        currentUser.setCaption("Welcome " + VaadinSession.getCurrent().getAttribute("user").toString());
     }
 }
 

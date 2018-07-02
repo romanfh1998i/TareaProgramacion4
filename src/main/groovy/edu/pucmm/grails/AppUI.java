@@ -12,6 +12,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import edu.pucmm.grails.domain.Authentication;
 import edu.pucmm.grails.utils.KoffeeUI;
+import edu.pucmm.grails.utils.RegisterUI;
 
 /**
  * Created by aluis on 5/27/18.
@@ -59,7 +60,11 @@ public class AppUI extends UI {
                 getNavigator().navigateTo(SecurePage.NAME);
             }
         } else {
+            getNavigator().addView(RegisterUI.NAME, RegisterUI.class);
             getNavigator().navigateTo(LoginPage.NAME);
+            if(route.equals("!Register")){
+                getNavigator().navigateTo(RegisterUI.NAME);
+            }
         }
     }
 }

@@ -11,8 +11,9 @@ class AuthenticationService {
         return Authentication.findByUsernameAndPassword(user, password)
     }
 
-    Authentication registerUser(String user, String password) {
+    def registerUser(String user, String name, String password) {
         Authentication authentication = new Authentication()
+        authentication.name = name
         authentication.username = user
         authentication.password = password
         return authentication.save(flush: true, failOnError: true)
